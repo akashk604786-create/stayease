@@ -2,45 +2,96 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
-      <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%= editing ? "Edit" : "Register"%> Your Home on StayEase</h1>
-      <form action="/host/<%= editing ? "edit-home" : "add-home"%>" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
-        <input type="hidden" name="id" value="<%= editing ? home._id : ''%>" />
-        <input
-          type="text"
-          name="houseName"
-          value="<%= editing ? home.houseName : ''%>"
-          placeholder="Enter your House Name"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="price"
-          value="<%= editing ? home.price : ''%>"
-          placeholder="Price Per Night"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="location"
-          value="<%= editing ? home.location : ''%>"
-          placeholder="Location"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="text"
-          name="rating"
-          value="<%= editing ? home.rating : ''%>"
-          placeholder="Rating"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <input
-          type="file"
-          name="photo"
-          accept="image/jpg, image/jpeg, image/png"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"/>
-        <textarea
-          name="description"
-          placeholder="Describe your home"
-          class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"><%= editing ? home.description : ''%></textarea>
-        <input type="submit" value="<%= editing ? "Update Home" : "Add Home"%>" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300" />
-      </form>
+
+    <main class="shell page">
+      <div class="mx-auto w-full max-w-2xl animate-rise">
+        <header class="mb-8 text-center">
+          <p class="eyebrow"><%= editing ? "Editing" : "New listing" %></p>
+          <h1 class="title mt-2"><%= editing ? "Edit your home" : "List your home" %></h1>
+          <p class="subtitle mx-auto max-w-sm">
+            <%= editing ? "Update the details guests will see." : "Tell guests what makes your place worth staying in." %>
+          </p>
+        </header>
+
+        <div class="panel p-7 sm:p-8">
+          <form action="/host/<%= editing ? "edit-home" : "add-home" %>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<%= editing ? home._id : '' %>" />
+
+            <div class="mb-5">
+              <label for="houseName" class="label">Home name</label>
+              <input
+                type="text"
+                id="houseName"
+                name="houseName"
+                value="<%= editing ? home.houseName : '' %>"
+                placeholder="Lakeview Cottage"
+                class="field" />
+            </div>
+
+            <div class="mb-5 flex flex-col gap-5 sm:flex-row">
+              <div class="flex-1">
+                <label for="price" class="label">Price per night (₹)</label>
+                <input
+                  type="text"
+                  id="price"
+                  name="price"
+                  value="<%= editing ? home.price : '' %>"
+                  placeholder="2500"
+                  class="field" />
+              </div>
+              <div class="flex-1">
+                <label for="rating" class="label">Rating</label>
+                <input
+                  type="text"
+                  id="rating"
+                  name="rating"
+                  value="<%= editing ? home.rating : '' %>"
+                  placeholder="4.5"
+                  class="field" />
+              </div>
+            </div>
+
+            <div class="mb-5">
+              <label for="location" class="label">Location</label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value="<%= editing ? home.location : '' %>"
+                placeholder="Manali, Himachal Pradesh"
+                class="field" />
+            </div>
+
+            <div class="mb-5">
+              <label for="photo" class="label">Photo</label>
+              <input
+                type="file"
+                id="photo"
+                name="photo"
+                accept="image/jpg, image/jpeg, image/png"
+                class="field cursor-pointer p-2.5 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-cream-deep file:px-4 file:py-2 file:text-sm file:font-medium file:text-ink hover:file:bg-clay-50" />
+              <p class="mt-1.5 text-xs text-ink-faint">JPG or PNG.</p>
+            </div>
+
+            <div class="mb-6">
+              <label for="description" class="label">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                rows="4"
+                placeholder="Describe your home, the neighbourhood, and what guests will love."
+                class="field resize-y"><%= editing ? home.description : '' %></textarea>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row-reverse">
+              <button type="submit" class="btn-primary sm:flex-1">
+                <%= editing ? "Save changes" : "Publish home" %>
+              </button>
+              <a href="/host/host-home-list" class="btn-outline sm:flex-1">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   </body>
 </html>

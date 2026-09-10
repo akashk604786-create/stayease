@@ -17,11 +17,9 @@ exports.getEditHome = (req, res, next) => {
 
   Home.findById(homeId).then((home) => {
     if (!home) {
-      console.log("Home not found for editing.");
       return res.redirect("/host/host-home-list");
     }
 
-    console.log(homeId, editing, home);
     res.render("host/edit-home", {
       home: home,
       pageTitle: "Edit your Home",
@@ -47,8 +45,6 @@ exports.getHostHomes = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   const { houseName, price, location, rating, description } = req.body;
-  console.log(houseName, price, location, rating, description);
-  console.log(req.file);
 
   if (!req.file) {
     return res.status(422).send("No image provided");
@@ -64,16 +60,14 @@ exports.postAddHome = (req, res, next) => {
     photo,
     description,
   });
-  home.save().then(() => {
-    console.log("Home Saved successfully");
-  });
+
+  home.save();
 
   res.redirect("/host/host-home-list");
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, houseName, price, location, rating, description } =
-    req.body;;
+  const { id, houseName, price, location, rating, description } = req.body;
   Home.findById(id)
     .then((home) => {
       home.houseName = houseName;
@@ -93,9 +87,6 @@ exports.postEditHome = (req, res, next) => {
 
       home
         .save()
-        .then((result) => {
-          console.log("Home updated ", result);
-        })
         .catch((err) => {
           console.log("Error while updating ", err);
         });
@@ -108,7 +99,6 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  console.log("Came to delete ", homeId);
   Home.findByIdAndDelete(homeId)
     .then(() => {
       res.redirect("/host/host-home-list");

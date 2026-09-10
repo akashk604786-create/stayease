@@ -1,3 +1,131 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-cream text-ink antialiased;
+    font-feature-settings: "kern", "liga";
+  }
+
+  /* One consistent focus ring across every interactive element */
+  :focus-visible {
+    @apply outline-none ring-2 ring-clay-300 ring-offset-2 ring-offset-cream rounded-md;
+  }
+
+  ::selection {
+    @apply bg-clay-100 text-ink;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---- Layout ---- */
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .page {
+    @apply py-12 sm:py-16;
+  }
+
+  /* ---- Typography ---- */
+  .title {
+    @apply font-display text-3xl sm:text-4xl font-semibold tracking-tight text-ink;
+  }
+
+  .subtitle {
+    @apply mt-2 text-base text-ink-soft;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.18em] text-clay-500;
+  }
+
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5
+           text-sm font-medium transition duration-200 ease-smooth
+           active:scale-[0.98] select-none;
+  }
+
+  .btn-primary {
+    @apply btn bg-clay-500 text-cream shadow-soft hover:bg-clay-600 hover:shadow-lift;
+  }
+
+  .btn-outline {
+    @apply btn border border-line bg-white text-ink hover:border-clay-300 hover:bg-clay-50;
+  }
+
+  .btn-quiet {
+    @apply btn text-ink-soft hover:bg-cream-deep hover:text-ink;
+  }
+
+  .btn-danger {
+    @apply btn border border-line bg-white text-ink-soft hover:border-clay-300 hover:bg-clay-50 hover:text-clay-600;
+  }
+
+  .btn-block {
+    @apply w-full;
+  }
+
+  /* ---- Surfaces ---- */
+  .panel {
+    @apply rounded-xl2 border border-line bg-white shadow-soft;
+  }
+
+  .card {
+    @apply overflow-hidden rounded-xl2 border border-line bg-white shadow-soft
+           transition duration-300 ease-smooth hover:-translate-y-1 hover:shadow-lift;
+  }
+
+  .card-media {
+    @apply relative aspect-[4/3] overflow-hidden bg-cream-deep;
+  }
+
+  .card-media img {
+    @apply h-full w-full object-cover transition duration-500 ease-smooth group-hover:scale-[1.04];
+  }
+
+  /* ---- Forms ---- */
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink-soft;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-ink
+           placeholder:text-ink-faint transition duration-200 ease-smooth
+           hover:border-clay-200 focus:border-clay-400 focus:outline-none
+           focus:ring-2 focus:ring-clay-100 focus:ring-offset-0;
+  }
+
+  .field-icon {
+    @apply pl-11;
+  }
+
+  /* ---- Bits ---- */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-cream-deep px-3 py-1
+           text-xs font-medium text-ink-soft;
+  }
+
+  .divide-hair {
+    @apply border-t border-line;
+  }
+}

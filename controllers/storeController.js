@@ -2,7 +2,6 @@ const Home = require("../models/home");
 const User = require("../models/user");
 
 exports.getIndex = (req, res, next) => {
-  console.log("Session Value: ", req.session);
   Home.find().then((registeredHomes) => {
     res.render("store/index", {
       registeredHomes: registeredHomes,
