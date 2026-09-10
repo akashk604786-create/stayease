@@ -30,6 +30,7 @@ A home-rental web app built with Node, Express, EJS and MongoDB. Guests browse l
 
 **Hosts**
 - Publish a home with a photo upload, price, location, rating and description
+- Each listing belongs to the host who created it — you only ever see and manage your own
 - Edit or delete your listings; replacing a photo deletes the old file from disk
 - `/host/*` routes are behind an auth guard
 
@@ -136,10 +137,11 @@ Reusable component classes (`.btn-primary`, `.card`, `.field`, `.panel`, `.shell
 npm test
 ```
 
-12 tests covering signup validation, login and logout, session handling, listing pages, favourites, and the `/host` auth guard. They run against `mongodb-memory-server`, so no local database is needed and your real data is never touched.
+18 tests covering signup validation, login and logout, session handling, listing pages, favourites, the `/host` auth guard, and host ownership — including that one host cannot read, edit or delete another host's listing. They run against `mongodb-memory-server`, so no local database is needed and your real data is never touched.
 
 ## Known limitations
 
 - **Bookings are not implemented.** `/bookings` and the "Book" button are placeholders; there's no `Booking` model yet.
 - **Uploads are stored on local disk,** which won't survive a deploy to an ephemeral filesystem. Object storage would be the fix.
-- **Any signed-in host can edit or delete any listing** — homes aren't yet tied to the host who created them.
+- **Any signed-in user can reach `/host`,** including guests. The guard checks that you're logged in but not that you're a host, so a guest can publish a listing by visiting the URL directly.
+- **Deleting a home leaves its photo on disk** and leaves a stale id in anyone's favourites. Mongoose drops the missing reference when populating, so nothing breaks — it's untidy rather than harmful.
